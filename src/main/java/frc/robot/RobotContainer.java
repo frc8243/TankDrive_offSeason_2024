@@ -12,6 +12,9 @@ import frc.robot.commands.MotorCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
+
+import javax.sound.sampled.Port;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,7 +28,8 @@ import frc.robot.subsystems.LEDSubsystem;
 public class RobotContainer {
   private final MotorSubsystem m_MotorSubsystem = new MotorSubsystem(12);
   private final LEDSubsystem ledSubsystem = new LEDSubsystem();
-  private final XboxController xboxcontroller = new XboxController(0);
+  public final static CommandXboxController driver = new CommandXboxController(0);
+  public final static CommandXboxController  operator = new CommandXboxController(1);
   private final DrivetrainSubsystem drivetrainsubsystem = new DrivetrainSubsystem();
   // FIXXXXX THIS!!!! CODE LINES 9 + 10 
 
@@ -35,7 +39,7 @@ public class RobotContainer {
  
  
 
-  public final static CommandXboxController controller = new CommandXboxController(0);
+  //public final static CommandXboxController controller = new CommandXboxController(0);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -57,12 +61,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    controller.a().onTrue(new InstantCommand(()->m_MotorSubsystem.stop()));
-    controller.x().onTrue(new InstantCommand(()->ledSubsystem.setBlue()));
+    driver.a().onTrue(new InstantCommand(()->m_MotorSubsystem.stop()));
+    operator.x().onTrue(new InstantCommand(()->ledSubsystem.setRed()));
+    operator.rightBumper().onTrue(new InstantCommand(()->ledSubsystem.setPurple()));
+    operator.leftBumper().onTrue(new InstantCommand(()->ledSubsystem.setGreen()));
+    operator.y().onTrue(new InstantCommand(()->ledSubsystem.turnOff()));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     
-    controller.b().onTrue(new InstantCommand(()->m_MotorSubsystem.spin(.5)));
+    driver.b().onTrue(new InstantCommand(()->m_MotorSubsystem.spin(.5)));
 
 
   }

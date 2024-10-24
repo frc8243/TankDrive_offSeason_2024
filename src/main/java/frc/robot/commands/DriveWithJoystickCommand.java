@@ -30,9 +30,9 @@ private final DrivetrainSubsystem drivetrainSubsystem;
   @Override
   public void execute() {
 
-    double forwardSpeed = RobotContainer.controller.getRawAxis(1);
-    System.out.println("Axis 1: " + RobotContainer.controller.getRawAxis(1));
-    double turningSpeed = RobotContainer.controller.getRawAxis(4);
+    double forwardSpeed = RobotContainer.driver.getRawAxis(1);
+    System.out.println("Axis 1: " + RobotContainer.driver.getRawAxis(1));
+    double turningSpeed = RobotContainer.driver.getRawAxis(4);
     drivetrainSubsystem.arcadeDrive(forwardSpeed, turningSpeed);
 
   }
